@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Comp1 } from "./components/comp1";
+import Home from "./components/Home";
 import { Comp2 } from "./components/comp2";
 import { Comp3 } from "./components/comp3";
 import {
@@ -9,6 +9,7 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/clerk-react";
+import Movies from "./components/Movies";
 
 function App() {
   return (
@@ -39,8 +40,8 @@ function App() {
           <span>This is Moviedc</span>
         </div>
         <nav className="flex gap-5">
-          <Link to="/comp1" className="text-blue-500 hover:underline">
-            Comp1
+          <Link to="/" className="text-blue-500 hover:underline">
+            Home
           </Link>
           <Link to="/comp2" className="text-blue-500 hover:underline">
             Comp2
@@ -48,11 +49,15 @@ function App() {
           <Link to="/comp3" className="text-blue-500 hover:underline">
             Comp3
           </Link>
+          <Link to="/movies" className="text-blue-500 hover:underline">
+            Movies
+          </Link>
         </nav>
         <Routes>
-          <Route path="/comp1" element={<Comp1 />} />
+          <Route path="/" element={<Home />} />
           <Route path="/comp2" element={<Comp2 />} />
           <Route path="/comp3" element={<Comp3 />} />
+          <Route path="/movies" element={<Movies />} />
         </Routes>
       </div>
     </BrowserRouter>
