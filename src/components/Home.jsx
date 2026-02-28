@@ -25,9 +25,8 @@ function Home() {
 
       const res = await fetch(url);
       const data = await res.json();
-
       setMovies(data.results || []);
-    } catch (err) {
+    } catch {
       setError("Failed to load movies");
     } finally {
       setLoading(false);
@@ -42,7 +41,6 @@ function Home() {
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Discover Movies</h1>
 
-      {/* Controls */}
       <div className="flex flex-wrap gap-3 mb-6">
         <input
           type="text"
@@ -70,11 +68,9 @@ function Home() {
         </select>
       </div>
 
-      {/* States */}
       {loading && <p>Loading movies...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
-      {/* Movie Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5">
         {movies.map((movie) => (
           <Link key={movie.id} to={`/movies/${movie.id}`}>
