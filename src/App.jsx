@@ -4,7 +4,7 @@ import { Comp2 } from "./components/comp2";
 import { Comp3 } from "./components/comp3";
 import Movies from "./components/Movies";
 import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
