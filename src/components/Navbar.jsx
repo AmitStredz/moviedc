@@ -50,7 +50,17 @@ export default function Navbar() {
               <div className="flex items-center text-sm font-mono">
                 Hi! {user?.firstName}
               </div>
-              <UserButton />
+              <UserButton
+                afterSignOut={() => {
+                  Object.keys(localStorage).forEach((key) => {
+                    if (key.startsWith("app_")) {
+                      localStorage.removeItem(key);
+                    }
+                  });
+
+                  return "/";
+                }}
+              />
             </SignedIn>
 
             <SignedOut>
@@ -118,7 +128,17 @@ export default function Navbar() {
               <div className="flex items-center justify-between text-sm font-mono">
                 Hi! {user?.firstName} <br />
                 {user?.emailAddresses[0].emailAddress}
-                <UserButton />
+                <UserButton
+                  afterSignOut={() => {
+                    Object.keys(localStorage).forEach((key) => {
+                      if (key.startsWith("app_")) {
+                        localStorage.removeItem(key);
+                      }
+                    });
+
+                    return "/";
+                  }}
+                />
               </div>
             </SignedIn>
 
