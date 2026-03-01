@@ -30,40 +30,51 @@ function Movies() {
   };
 
   useEffect(() => {
+  const delay = setTimeout(() => {
     fetchMovies();
-  }, [category]);
+  }, 500);
+
+  return () => clearTimeout(delay);
+}, [category, query]);
 
   return (
     <div className="p-6 max-w-6xl mx-auto text-white">
       <h1 className="text-3xl font-bold mb-6">Discover Movies</h1>
 
       {/* Controls */}
-      <div className="flex flex-wrap gap-3 mb-6">
+      <div className="bg-slate-800 p-5 rounded-2xl shadow-lg mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+
+      {/* Search */}
+      <div className="relative w-full md:w-1/3">
         <input
           type="text"
-          placeholder="Search movie..."
+          placeholder="Search movies..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="border p-2 rounded w-60 text-black"
+          className="w-full bg-slate-700 text-white placeholder-gray-400 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
         />
-
-        <button
-          onClick={fetchMovies}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Search
-        </button>
-
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="border p-2 rounded text-black"
-        >
-          <option value="popular">Popular</option>
-          <option value="now_playing">Now Playing</option>
-          <option value="top_rated">Top Rated</option>
-        </select>
       </div>
+
+      {/* Category Filter */}
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className="bg-slate-700 text-white px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      >
+        <option value="popular">🔥 Popular</option>
+        <option value="now_playing">🎬 Now Playing</option>
+        <option value="top_rated">⭐ Top Rated</option>
+      </select>
+
+      {/* Search Button */}
+      <button
+        onClick={fetchMovies}
+        className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl text-white font-semibold transition shadow-md"
+      >
+        Search
+      </button>
+
+    </div>
 
       {/* States */}
       {loading && <p>Loading movies...</p>}
