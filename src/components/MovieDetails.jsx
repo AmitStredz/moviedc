@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -7,11 +8,38 @@ export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
 
+  const { user } = useUser();
+  const [message, setMessage] = useState("");
+  
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
       .then(res => res.json())
       .then(data => setMovie(data));
   }, [id]);
+
+  const handleAdd = (movie) => {
+    const stored = JSON.parse(localStorage.getItem(`wishlist_${user.id}`)) || [];
+
+    if (stored.some(m => m.id === movie.id)) {
+      setMessage("exists");
+      return;
+    }
+
+    const updated = [...stored, movie];
+    localStorage.setItem(`wishlist_${user.id}`, JSON.stringify(updated));
+
+    setMessage("added");
+  };
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   if (!movie) {
     return (
@@ -58,10 +86,24 @@ export default function MovieDetails() {
           </div>
         </div>
 
-        {/* Wishlist button placeholder */}
-        <button className="mt-8 w-fit px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white font-semibold shadow-md">
+        <button
+          onClick={() => handleAdd(movie)}
+          className="mt-8 w-fit px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white font-semibold shadow-md"
+        >
           ❤️ Add to Wishlist
         </button>
+
+        {message === "added" && (
+          <p className="mt-3 text-green-400 font-medium">
+            ✅ Added to wishlist
+          </p>
+        )}
+
+        {message === "exists" && (
+          <p className="mt-3 text-yellow-400 font-medium">
+            ⚠️ Already in wishlist
+          </p>
+        )}
 
       </div>
     </div>

@@ -23,16 +23,16 @@ export default function Profile() {
   return (
     <div>
       <h1>{user.firstName}'s Wishlist</h1>
-      <p>Total movies: {wishlist.length === 0 ? (
-                        <p>No saved movies yet.</p>
-                        ) : (
-                        wishlist.map((movie) => (
-                            <div key={movie.id}>
-                            <h3>{movie.title}</h3>
-                            <p>Rating: {movie.vote_average}</p>
-                            </div>
-                        ))
-                        )}</p>
+      <p>Total movies: {wishlist.length}</p>
+        {wishlist.length === 0 ? (
+        <p>No saved movies yet.</p>
+        ) : (wishlist.map((movie) => (
+            <div key={movie.id}>
+            <h3>{movie.title}</h3>
+            <p>Rating: {movie.vote_average}</p>
+            </div>
+        ))
+        )}
     </div>
   );
 }
