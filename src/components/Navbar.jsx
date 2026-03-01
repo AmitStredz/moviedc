@@ -33,7 +33,7 @@ export default function Navbar() {
         <SignedOut>
           <div className="flex gap-5">
             <SignInButton>
-              <button className="py-2 px-4 rounded-md bg-slate-200 hover:bg-slate-300 hover:text-slate-900 transition">
+              <button className="py-3 px-4 rounded-md bg-slate-200 text-slate-900 hover:bg-slate-300 transition">
                 Sign In
               </button>
             </SignInButton>
