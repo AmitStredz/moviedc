@@ -33,9 +33,6 @@ export default function Navbar() {
           <Link to="/movies" className="hover:text-slate-300">
             Movies
           </Link>
-          <Link to="/profile" className="hover:text-slate-300">
-            Wishlist
-          </Link>
 
           <div className="flex items-center gap-4">
             <SignedIn>
@@ -102,7 +99,6 @@ export default function Navbar() {
         <div className="lg:hidden mt-4 flex flex-col gap-4">
           <Link to="/">Home</Link>
           <Link to="/movies">Movies</Link>
-          <Link to="/profile">Wishlist</Link>
 
           <div className="flex flex-col gap-3 mt-2">
             <SignedIn>
