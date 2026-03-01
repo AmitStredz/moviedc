@@ -1,3 +1,4 @@
+import { useUser } from "@clerk/clerk-react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -9,6 +10,9 @@ export default function MovieDetails() {
   const [trailer, setTrailer] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
 
+  const { user } = useUser();
+  const [message, setMessage] = useState("");
+  
   useEffect(() => {
     async function fetchMovie() {
       const res = await fetch(
@@ -31,6 +35,30 @@ export default function MovieDetails() {
 
     fetchMovie();
   }, [id]);
+
+  const handleAdd = (movie) => {
+    const stored = JSON.parse(localStorage.getItem(`wishlist_${user.id}`)) || [];
+
+    if (stored.some(m => m.id === movie.id)) {
+      setMessage("exists");
+      return;
+    }
+
+    const updated = [...stored, movie];
+    localStorage.setItem(`wishlist_${user.id}`, JSON.stringify(updated));
+
+    setMessage("added");
+  };
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   if (!movie) {
     return (
@@ -82,7 +110,9 @@ export default function MovieDetails() {
           {/* Buttons */}
           <div className="flex gap-4 flex-wrap mt-8">
 
-            <button className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white font-semibold shadow-md">
+            <button
+              onClick={() => handleAdd(movie)}
+              className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white font-semibold shadow-md">
               ❤️ Add to Wishlist
             </button>
 
@@ -95,9 +125,22 @@ export default function MovieDetails() {
               </button>
             )}
 
+            {message === "added" && (
+              <p className="mt-3 text-green-400 font-medium">
+                ✅ Added to wishlist
+              </p>
+            )}
+
+            {message === "exists" && (
+              <p className="mt-3 text-yellow-400 font-medium">
+                ⚠️ Already in wishlist
+              </p>
+            )}
+
           </div>
 
         </div>
+
       </div>
 
       {/* TRAILER POPUP */}
