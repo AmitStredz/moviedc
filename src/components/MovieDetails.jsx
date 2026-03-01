@@ -1,60 +1,69 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-function MovieDetails() {
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
   useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
-        );
-        const data = await res.json();
-        setMovie(data);
-      } catch (err) {
-        console.error("Error loading movie");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMovie();
+    fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
+      .then(res => res.json())
+      .then(data => setMovie(data));
   }, [id]);
 
-  if (loading) return <p className="p-6">Loading movie...</p>;
-  if (!movie) return <p className="p-6">Movie not found</p>;
+  if (!movie) {
+    return (
+      <div className="flex justify-center items-center h-[60vh] text-lg text-white">
+        Loading movie details...
+      </div>
+    );
+  }
 
   return (
-    <div className="p-6 max-w-5xl mx-auto flex flex-col md:flex-row gap-8">
+    <div className="max-w-6xl mx-auto mt-8 p-6 bg-slate-900 text-white rounded-2xl shadow-xl flex flex-col md:flex-row gap-8">
+
       {/* Poster */}
-      <img
-        src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-        alt={movie.title}
-        className="w-72 rounded shadow"
-      />
+      <div className="flex-shrink-0">
+        {movie.poster_path ? (
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            alt={movie.title}
+            className="rounded-xl shadow-lg w-full md:w-80"
+          />
+        ) : (
+          <div className="w-full md:w-80 h-[450px] bg-slate-700 rounded-xl flex items-center justify-center">
+            No Image
+          </div>
+        )}
+      </div>
 
       {/* Details */}
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold">{movie.title}</h1>
+      <div className="flex flex-col justify-between">
 
-        <p className="text-gray-600">{movie.release_date}</p>
+        <div>
+          <h1 className="text-4xl font-bold mb-4 text-white">
+            {movie.title}
+          </h1>
 
-        <p className="text-lg">⭐ {movie.vote_average}</p>
+          <p className="text-gray-300 mb-6 leading-relaxed max-w-2xl">
+            {movie.overview || "No overview available."}
+          </p>
 
-        <p className="text-gray-800">{movie.overview}</p>
+          <div className="flex flex-wrap gap-6 text-sm text-gray-400">
+            <span>⭐ Rating: {movie.vote_average}</span>
+            <span>📅 Release: {movie.release_date}</span>
+            <span>🔥 Popularity: {Math.round(movie.popularity)}</span>
+          </div>
+        </div>
 
-        {/* Wishlist placeholder */}
-        <button className="mt-4 bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700">
-          Add to Wishlist
+        {/* Wishlist button placeholder */}
+        <button className="mt-8 w-fit px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 transition text-white font-semibold shadow-md">
+          ❤️ Add to Wishlist
         </button>
+
       </div>
     </div>
   );
 }
-
-export default MovieDetails;
