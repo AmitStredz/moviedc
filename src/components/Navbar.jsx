@@ -23,6 +23,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-8">
           <Link to="/" className="hover:text-slate-400">Home</Link>
           <Link to="/movies" className="hover:text-slate-400">Movies</Link>
+          <Link to="/profile" className="hover:text-slate-400">Wishlist</Link>
 
           <div className="flex items-center gap-4">
             <SignedIn>
@@ -58,6 +59,7 @@ export default function Navbar() {
         <div className="lg:hidden mt-4 flex flex-col gap-4">
           <Link to="/">Home</Link>
           <Link to="/movies">Movies</Link>
+          <Link to="/profile">Wishlist</Link>
         </div>
       )}
     </nav>
