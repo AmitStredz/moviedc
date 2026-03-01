@@ -20,7 +20,7 @@ export default function Navbar() {
   const { user } = useUser();
   
   return (
-    <nav className="block mx-auto bg-slate-800/50 text-slate-200 px-6 py-3 sticky top-4 rounded-2xl backdrop-blur-md border border-white/10 shadow-lg w-[95%] max-w-6xl">
+    <nav className="block mx-auto bg-slate-800/50 text-slate-200 px-6 py-3 sticky top-4 rounded-2xl backdrop-blur-md border border-white/10 shadow-lg w-[95%] max-w-6xl z-9999">
       <div className="flex items-center justify-between">
         <Link to="/" className="text-xl font-bold hover:text-slate-300">
           MovIEDC
@@ -34,7 +34,7 @@ export default function Navbar() {
             Movies
           </Link>
           <Link to="/profile" className="hover:text-slate-300">
-            Profile
+            Wishlist
           </Link>
 
           <div className="flex items-center gap-4">
