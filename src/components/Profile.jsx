@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
+import Unauth from "./Unauth";
 
 export default function Profile() {
   const { user } = useUser();
@@ -18,7 +19,12 @@ export default function Profile() {
     localStorage.setItem(`wishlist_${user.id}`, JSON.stringify(updated));
     };
 
-  if (!user) return <p>Please sign in</p>;
+  if (!user)
+    return (
+      <div>
+        <Unauth />
+      </div>
+    );
 
   return (
     <div className="p-6 max-w-6xl mx-auto text-white bg-slate-900 min-h-screen">
