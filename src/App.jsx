@@ -4,6 +4,7 @@ import { Comp2 } from "./components/comp2";
 import { Comp3 } from "./components/comp3";
 import Movies from "./components/Movies";
 import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
 // import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/comp2" element={<Comp2 />} />
             <Route path="/comp3" element={<Comp3 />} />
             <Route path="/movies" element={<Movies />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
       </BrowserRouter>
