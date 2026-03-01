@@ -9,9 +9,9 @@ import { RedirectToSignIn } from "@clerk/clerk-react";
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-
       <div className="p-6">
+        <Navbar />
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<Movies />} />
